@@ -7,7 +7,8 @@ const bannerRouter = require('./routes/banner');
 const categoryRouter = require('./routes/category');
 const subcategoryRouter = require('./routes/sub_category');
 const productRouter = require('./routes/product');
-const productReviewRouter = require('./routes/product_review')
+const productReviewRouter = require('./routes/product_review');
+const vendorRouter = require('./routes/vendor');
 
 const cors = require('cors');
 
@@ -27,6 +28,7 @@ app.use('/api', categoryRouter);
 app.use('/api', subcategoryRouter);
 app.use('/api', productRouter);
 app.use('/api', productReviewRouter);
+app.use('/api', vendorRouter);
 
 // Kết nối tới MongoDB
 mongoose.connect(DB, {

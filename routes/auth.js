@@ -50,23 +50,23 @@ authRouter.post("/signup", validateUser(userSchema), async (req, res) => {
 authRouter.post('/signin', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
+    const findUser = await User.findOne({ email });
+    if (!findUser) {
       return res.status(400).json({ msg: 'Không tìm thấy người dùng với email này' });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, findUser.password);
     if (!isMatch) {
       return res.status(400).json({ msg: 'Mật khẩu không đúng' });
     }
 
-    const accessToken = jwt.sign({ id: user._id }, accessTokenSecret, { expiresIn: '15m' });
-    const refreshToken = jwt.sign({ id: user._id }, refreshTokenSecret);
+    const accessToken = jwt.sign({ id: findUser._id }, accessTokenSecret, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ id: findUser._id }, refreshTokenSecret);
 
     refreshTokens.push(refreshToken);
 
-    const { password: userPassword, ...userWithoutPassword } = user._doc;
-    res.json({ accessToken, refreshToken, ...userWithoutPassword });
+    const { password: userPassword, ...userWithoutPassword } = findUser._doc;
+    res.json({ accessToken, refreshToken, user: userWithoutPassword });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
