@@ -1,3 +1,4 @@
+const { required } = require('joi');
 const mongoose = require('mongoose');
 
 const productSchema = mongoose.Schema({
@@ -7,11 +8,11 @@ const productSchema = mongoose.Schema({
         required: true,
     },
     productPrice: {
-        type: String,
+        type: Number,
         required: true,
     },
     quantity: {
-        type: String,
+        type: Number,
         required: true,
     },
     description: {
@@ -19,6 +20,14 @@ const productSchema = mongoose.Schema({
         required: true,
     },
     category: {
+        type: String,
+        required: true,
+    },
+    vendorId: {
+        type: String,
+        required: true,
+    },
+    fullName: {
         type: String,
         required: true,
     },
